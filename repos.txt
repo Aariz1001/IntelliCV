@@ -3,9 +3,3 @@
 # Example:
 # microsoft/vscode
 # facebook/react
-
-Aariz1001/CarPulse
-Aariz1001/FlexiDiet
-Aariz1001/Fusion-RAG
-Aariz1001/Quantum---Unit-Converter
-Aariz1001/Predictive-Intent
