@@ -1,4 +1,4 @@
-# AI CV Builder
+# IntelliCV
 
 An intelligent CV builder that transforms your career data into a professionally-tailored, ATS-optimized Word document using AI. Upload your CV, select GitHub repos, and get a one-page resume optimized for both applicant tracking systems and hiring managers.
 
