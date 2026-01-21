@@ -1,0 +1,50 @@
+[tool.setuptools]
+packages = ["src"]
+
+[project]
+name = "cv-builder"
+version = "1.0.0"
+description = "AI-powered CV builder that tailors your resume using GitHub repos and OpenRouter's Gemini model"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["cv", "resume", "ai", "openrouter", "gemini", "ats"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.32.3",
+    "python-docx>=1.1.2",
+    "jsonschema>=4.23.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=22.0",
+    "flake8>=4.0",
+    "mypy>=0.990",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/cv-builder"
+Documentation = "https://github.com/yourusername/cv-builder#readme"
+Repository = "https://github.com/yourusername/cv-builder.git"
+Issues = "https://github.com/yourusername/cv-builder/issues"
+
+[project.scripts]
+cv-builder = "src.main:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

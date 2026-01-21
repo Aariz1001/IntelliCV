@@ -1,0 +1,58 @@
+{
+  "name": "Jane Doe",
+  "title": "Software Engineer",
+  "contact": {
+    "email": "jane@example.com",
+    "phone": "+1 555 555 5555",
+    "location": "Remote",
+    "links": [
+      {"label": "GitHub", "url": "https://github.com/janedoe"},
+      {"label": "LinkedIn", "url": "https://linkedin.com/in/janedoe"}
+    ]
+  },
+  "summary": [
+    "Full-stack engineer with 5+ years building web platforms.",
+    "Experienced in Python, TypeScript, and cloud-native systems."
+  ],
+  "experience": [
+    {
+      "company": "Acme Inc.",
+      "role": "Senior Software Engineer",
+      "location": "Remote",
+      "dates": "2021 - Present",
+      "bullets": [
+        "Built scalable APIs for payment processing.",
+        "Led migration to containerized deployment."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Analytics Dashboard",
+      "link": "https://github.com/janedoe/analytics",
+      "dates": "2020",
+      "bullets": [
+        "Created a data visualization suite for internal teams."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "State University",
+      "degree": "B.S. Computer Science",
+      "location": "City, ST",
+      "dates": "2016 - 2020",
+      "details": [
+        "Graduated with honors."
+      ]
+    }
+  ],
+  "skills": {
+    "groups": [
+      {"name": "Languages", "items": ["Python", "TypeScript", "SQL"]},
+      {"name": "Frameworks", "items": ["FastAPI", "React"]}
+    ]
+  },
+  "certifications": ["AWS Certified Developer"],
+  "awards": ["Employee of the Year 2023"]
+}
