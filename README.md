@@ -38,12 +38,20 @@ An intelligent CV builder that transforms your career data into a professionally
 git clone <repo-url>
 cd CV_Builder
 python -m venv venv
-.\venv\Scripts\activate  # Windows
-# or
-source venv/bin/activate  # macOS/Linux
+
+# Windows PowerShell:
+.\venv\Scripts\Activate.ps1
+
+# Windows Command Prompt:
+venv\Scripts\activate.bat
+
+# macOS/Linux:
+source venv/bin/activate
 
 pip install -r requirements.txt
 ```
+
+Or skip manual setup and use the helper scripts (see Usage section).
 
 ## ⚙️ Setup
 
@@ -82,20 +90,69 @@ OPENROUTER_X_TITLE=
 
 ## 📖 Usage
 
+### Quick Start (Easiest)
+
+**Windows (PowerShell):**
+```powershell
+.\run.ps1 interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
+```
+
+**Windows (Command Prompt):**
+```cmd
+run.bat interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
+```
+
+**macOS/Linux:**
+```bash
+./run.sh interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
+```
+
+These scripts handle virtual environment activation and dependency installation automatically.
+
+### Manual Setup (If Not Using Scripts)
+
+If you prefer to run manually:
+
+**Windows PowerShell:**
+```powershell
+# Activate virtual environment
+.\venv\Scripts\Activate.ps1
+
+# Run from project root (NOT from src/)
+python -m src.main interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
+```
+
+**macOS/Linux:**
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Run from project root
+python -m src.main interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
+```
+
+⚠️ **Important:** Always run from the **project root directory**, NOT from the `src/` folder. The relative imports require this.
+
 ### Convert DOCX to JSON
 
 If you already have a DOCX CV, convert it to JSON for editing:
 
-```bash
-.\venv\Scripts\python scripts\docx_to_json.py "Your CV.docx" --output my_cv.json
+```powershell
+.\run.ps1 fetch-readmes --repos repos.txt --out .readme_cache
+```
+
+Or manually:
+```powershell
+.\venv\Scripts\activate
+python scripts/docx_to_json.py "Your CV.docx" --output my_cv.json
 ```
 
 ### Interactive Mode (Recommended)
 
 The fastest way to build a tailored CV:
 
-```bash
-.\venv\Scripts\python -m src.main interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
+```powershell
+.\run.ps1 interactive --cv my_cv.json --repos repos.txt --output-docx tailored_cv.docx
 ```
 
 **What happens:**
@@ -104,6 +161,44 @@ The fastest way to build a tailored CV:
 3. Downloads & caches selected READMEs
 4. Tailors your CV using AI (high reasoning effort)
 5. Generates a professional one-page DOCX
+
+### Fetch READMEs (Separate Step)
+
+Download READMEs upfront for a specific set of repos:
+
+```powershell
+.\run.ps1 fetch-readmes --repos repos.txt --out .readme_cache
+```
+
+Repos file format (`repos.txt`):
+```
+microsoft/vscode
+facebook/react
+# Comments are ignored
+google/go
+```
+
+### Build from Existing Files
+
+If you already have READMEs locally:
+
+```powershell
+.\run.ps1 build --cv my_cv.json --readme-dir ./readmes --output-docx output.docx
+```
+
+Or use individual README files:
+
+```powershell
+.\run.ps1 build --cv my_cv.json --readme ./project1/README.md --readme ./project2/README.md --output-docx output.docx
+```
+
+**What happens:**
+1. Lists all repos from `repos.txt`
+2. You select which ones to use: `1,3,5` or `1-3` or `all` or `none`
+3. Downloads & caches selected READMEs
+4. (Optional) Applies your guidance to tailor the CV
+5. Tailors your CV using AI (high reasoning effort)
+6. Generates a professional one-page DOCX
 
 ### Fetch READMEs (Separate Step)
 
@@ -129,6 +224,7 @@ If you already have READMEs locally:
 .\venv\Scripts\python -m src.main build \
   --cv my_cv.json \
   --readme-dir ./readmes \
+  --guidance "emphasize backend impact, preserve project order" \
   --output-docx output.docx
 ```
 
@@ -139,6 +235,7 @@ Or use individual README files:
   --cv my_cv.json \
   --readme ./project1/README.md \
   --readme ./project2/README.md \
+  --guidance "keep wording close, only condense" \
   --output-docx output.docx
 ```
 
@@ -242,31 +339,33 @@ your-org/private-repo
 
 ```bash
 # Step 1: Convert your DOCX CV to JSON
-.\venv\Scripts\python scripts\docx_to_json.py "My Resume.docx" --output my_cv.json
+.\run.ps1 (your script will handle this)
+# Or manually:
+python scripts/docx_to_json.py "My Resume.docx" --output my_cv.json
 
 # Step 2: Create repos.txt with your projects
 echo microsoft/vscode > repos.txt
 echo facebook/react >> repos.txt
 
 # Step 3: Run interactive mode
-.\venv\Scripts\python -m src.main interactive --cv my_cv.json --repos repos.txt --output-docx tailored.docx
+.\run.ps1 interactive --cv my_cv.json --repos repos.txt --output-docx tailored.docx
 ```
 
 ### Example 2: Use Pre-downloaded READMEs
 
 ```bash
 # Pre-download and cache READMEs
-.\venv\Scripts\python -m src.main fetch-readmes --repos repos.txt --out ./readmes
+.\run.ps1 fetch-readmes --repos repos.txt --out ./readmes
 
 # Then build multiple times without re-downloading
-.\venv\Scripts\python -m src.main build --cv my_cv.json --readme-dir ./readmes --output-docx output.docx
+.\run.ps1 build --cv my_cv.json --readme-dir ./readmes --output-docx output.docx
 ```
 
 ### Example 3: No READMEs (just optimize existing CV)
 
 ```bash
 # If you don't have repos, it still works - just optimizes what you have
-.\venv\Scripts\python -m src.main build --cv my_cv.json --output-docx optimized.docx
+.\run.ps1 build --cv my_cv.json --output-docx optimized.docx
 ```
 
 ## 💡 Tips & Best Practices
@@ -302,15 +401,42 @@ The AI automatically:
 
 ## 🐛 Troubleshooting
 
-### "ModuleNotFoundError: No module named 'src'"
-Run from the project root, not from inside `src/`:
-```bash
-cd CV_Builder
-.\venv\Scripts\python -m src.main --help
+### "ImportError: attempted relative import with no known parent package"
+You're running from inside the `src/` folder. Always run from the **project root**:
+```powershell
+cd C:\Users\maari\Desktop\CV_Builder  # Project root
+python -m src.main interactive --cv my_cv.json --repos repos.txt --output-docx output.docx
 ```
 
-### "ImportError: attempted relative import"
-Same issue - run from project root with `-m src.main`.
+OR use the helper script:
+```powershell
+.\run.ps1 interactive --cv my_cv.json --repos repos.txt --output-docx output.docx
+```
+
+### "venv/scripts/activate is not recognized" (Windows)
+Wrong syntax. Use these instead:
+
+**PowerShell:**
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+**Command Prompt:**
+```cmd
+venv\Scripts\activate.bat
+```
+
+**Or just use the helper script:**
+```powershell
+.\run.ps1 --help
+```
+
+### "ModuleNotFoundError: No module named 'src'"
+Same issue - run from project root:
+```powershell
+cd CV_Builder  # Go to project root
+python -m src.main --help
+```
 
 ### "Missing OPENROUTER_API_KEY"
 Check that `.env` exists and has a valid key:
@@ -318,9 +444,22 @@ Check that `.env` exists and has a valid key:
 cat .env | grep OPENROUTER_API_KEY
 ```
 
+If missing, see [Setup](#setup) section to add your API key.
+
 ### "README not found for owner/repo"
 - Check the repo name is correct
 - For private repos, ensure `GITHUB_TOKEN` is set and has repo scope
+
+### Script execution policy error (Windows PowerShell)
+If you get "cannot be loaded because running scripts is disabled":
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Then try again:
+```powershell
+.\run.ps1 interactive --cv my_cv.json --repos repos.txt --output-docx output.docx
+```
 
 ## 📦 Requirements
 
