@@ -48,7 +48,7 @@ env/
 output_cv.json
 tailored_cv.docx
 my_cv.json
-
+repos.txt
 # OS
 .DS_Store
 Thumbs.db
