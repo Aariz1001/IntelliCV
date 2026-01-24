@@ -21,12 +21,20 @@ def _parse_args() -> argparse.Namespace:
     build_parser.add_argument("--cv", required=True, help="Path to input CV JSON")
     build_parser.add_argument("--readme-dir", help="Directory with README .md files")
     build_parser.add_argument("--readme", action="append", default=[], help="Path to a README file (repeatable)")
+    build_parser.add_argument(
+        "--guidance",
+        help="Optional tailoring guidance (e.g., 'prioritize ML projects, keep wording close')",
+    )
     build_parser.add_argument("--output-docx", required=True, help="Output DOCX path")
     build_parser.add_argument("--output-json", help="Optional output JSON path")
 
     interactive_parser = subparsers.add_parser("interactive", help="Interactively select repos and build CV")
     interactive_parser.add_argument("--cv", required=True, help="Path to input CV JSON")
     interactive_parser.add_argument("--repos", required=True, help="Path to text file with owner/repo per line")
+    interactive_parser.add_argument(
+        "--guidance",
+        help="Optional tailoring guidance (you will be prompted if omitted)",
+    )
     interactive_parser.add_argument("--output-docx", required=True, help="Output DOCX path")
     interactive_parser.add_argument("--output-json", help="Optional output JSON path")
     interactive_parser.add_argument("--cache-dir", default=".readme_cache", help="Directory to cache downloaded READMEs")
@@ -122,8 +130,14 @@ def _handle_interactive(args: argparse.Namespace) -> None:
             except Exception as e:
                 print(f"  ✗ {repo}: {e}")
 
+    guidance = args.guidance
+    if guidance is None:
+        guidance = input("Optional tailoring guidance (press Enter to skip): ").strip() or None
+    if guidance:
+        print(f"Using guidance: {guidance}")
+
     print("\nTailoring CV with AI...")
-    tailored = tailor_cv(cv_json, readmes, config.openrouter)
+    tailored = tailor_cv(cv_json, readmes, config.openrouter, guidance=guidance)
     validate_output_cv(tailored)
 
     if args.output_json:
@@ -141,7 +155,7 @@ def _handle_build(args: argparse.Namespace) -> None:
     validate_input_cv(cv_json)
 
     readmes = _load_readmes(args)
-    tailored = tailor_cv(cv_json, readmes, config.openrouter)
+    tailored = tailor_cv(cv_json, readmes, config.openrouter, guidance=args.guidance)
     validate_output_cv(tailored)
 
     if args.output_json:
