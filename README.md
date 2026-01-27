@@ -11,6 +11,10 @@ An intelligent CV builder that transforms your career data into a professionally
 - **Professional formatting** - One-page layout with 0.25" margins, compact spacing, styled sections
 - **DOCX conversion** - Convert your existing DOCX CV to JSON format for easy editing
 - **Interactive CLI** - Choose repos on the fly, download READMEs, and generate tailored CVs in seconds
+- **🆕 Config-driven optimization** - Markdown config files with priorities, page limits, and intelligent content management
+- **🆕 Page-aware content reduction** - Automatically fit CV to 1, 2, or 3 pages while preserving quality
+- **🆕 Real-world impact translation** - Converts technical achievements into business-oriented language
+- **🆕 Change tracking & review** - See what changed and why, with ability to steer AI in different directions
 
 ## 📋 Table of Contents
 
@@ -21,6 +25,7 @@ An intelligent CV builder that transforms your career data into a professionally
   - [Interactive Mode (Recommended)](#interactive-mode-recommended)
   - [Fetch READMEs](#fetch-readmes)
   - [Build from Existing Files](#build-from-existing-files)
+- [Configuration Guide](#configuration-guide) ⭐ **NEW**
 - [File Formats](#file-formats)
 - [Configuration](#configuration)
 - [Examples](#examples)
@@ -239,7 +244,41 @@ Or use individual README files:
   --output-docx output.docx
 ```
 
+## 🎯 Configuration Guide ⭐ **NEW**
+
+IntelliCV now supports **intelligent, config-driven CV optimization**! 
+
+### What's New?
+
+- **Config files**: Define priorities, page limits, and optimization rules in a markdown file
+- **Page-aware trimming**: Automatically fit your CV to 1, 2, or 3 pages
+- **Real-world impact**: Technical achievements translated to business language
+- **Change tracking**: See what changed and why
+- **User review**: Approve changes or steer the AI in different directions
+
+### Quick Start
+
+```bash
+# 1. Copy example config
+cp cv_config.example.md my_cv_config.md
+
+# 2. Edit your priorities and page limit
+# (See CONFIG_GUIDE.md for all options)
+
+# 3. Build with config
+./run.ps1 build --cv my_cv.json --config my_cv_config.md --output-docx output.docx
+```
+
+📖 **See [CONFIG_GUIDE.md](CONFIG_GUIDE.md) for complete documentation** including:
+- Configuration file format and all available options
+- How page-aware optimization works
+- Real-world impact translation examples
+- Multiple configuration examples (1-page, data science, senior engineer, career transition)
+- Change report format and interpretation
+- Troubleshooting guide
+
 ## 📄 File Formats
+
 
 ### Input CV JSON (`my_cv.json`)
 

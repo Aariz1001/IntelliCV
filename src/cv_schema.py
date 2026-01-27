@@ -184,6 +184,34 @@ OUTPUT_SCHEMA = {
         },
         "certifications": {"type": "array", "items": {"type": "string"}},
         "awards": {"type": "array", "items": {"type": "string"}},
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "word_count": {"type": "integer"},
+                "page_count": {"type": "integer"},
+                "source_format": {"type": "string"},
+                "extracted_fonts": {
+                    "type": "object",
+                    "properties": {
+                        "family": {"type": "string"},
+                        "detected_sizes": {
+                            "type": "object",
+                            "additionalProperties": {"type": "integer"},
+                        },
+                    },
+                },
+                "margins": {
+                    "type": "object",
+                    "properties": {
+                        "top": {"type": "number"},
+                        "bottom": {"type": "number"},
+                        "left": {"type": "number"},
+                        "right": {"type": "number"},
+                    },
+                },
+                "extraction_timestamp": {"type": "string"},
+            },
+        },
     },
 }
 

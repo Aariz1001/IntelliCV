@@ -49,6 +49,11 @@ output_cv.json
 tailored_cv.docx
 my_cv.json
 repos.txt
+my_cv.md
+my_cv_from_docx.txt
+jobs_postings/
+changes/
+my_config.md
 # OS
 .DS_Store
 Thumbs.db

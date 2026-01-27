@@ -124,24 +124,24 @@ Repository READMEs (for ENHANCING and TAILORING the CV - these provide additiona
 
 === CRITICAL RULES - READ FIRST ===
 
-⚠️ PRESERVE STRUCTURE & ORDER:
+[!] PRESERVE STRUCTURE & ORDER:
 - Keep the same section order as the input CV
 - Keep the order of experience entries and bullets
 - Keep the order of existing projects unless adding new repo projects
 
-⚠️ PRESERVE ALL ORIGINAL CONTENT:
+[!] PRESERVE ALL ORIGINAL CONTENT:
 - Keep ALL projects from the input CV - do NOT remove any projects
 - Keep ALL experience bullets - you may rewrite them but not delete them
 - Keep ALL skills - you may reorganize but not remove
 - The READMEs are for ENHANCEMENT and adding context, NOT for replacing existing content
 - If a project is in the input CV but not in the READMEs, it MUST still appear in the output
 
-⚠️ MINIMAL CHANGES:
+[!] MINIMAL CHANGES:
 - Keep wording close to the original; prefer light tightening over rewrites
 - Do NOT invent facts or metrics not present in the CV or READMEs
 - Condense by removing redundancy, not by deleting items
 
-⚠️ ENHANCE, DON'T DELETE:
+[!] ENHANCE, DON'T DELETE:
 - Use README content to ADD technical depth and keywords to matching projects
 - If a README represents a project not in the CV, ADD it as an extra project entry
 - Improve wording and add metrics when provided, but preserve the substance
@@ -277,16 +277,20 @@ def tailor_cv(
     if config.x_title:
         headers["X-Title"] = config.x_title
 
+    import sys
+    print(f"[tailoring] Calling {config.model} with {config.reasoning_effort} reasoning...", file=sys.stderr, flush=True)
     response = requests.post(
         f"{config.base_url}/chat/completions",
         headers=headers,
         json=payload,
         timeout=300,
     )
+    print(f"[tailoring] API response received: {response.status_code}", file=sys.stderr, flush=True)
 
     if not response.ok:
         raise ValueError(f"OpenRouter error: {response.status_code} {response.text}")
 
     data = response.json()
     content = data["choices"][0]["message"]["content"]
+    print(f"[tailoring] Extracting JSON from response...", file=sys.stderr, flush=True)
     return _extract_json(content)
